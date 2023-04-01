@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Bike Parts Webshop Search</title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+<html>
+  <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
@@ -35,29 +32,32 @@
         </div>
       </div>
       
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
+      <div class="row gx-5 mb-3">
+        <div class="col-md-6 mb-5">
           <p><strong><input type="checkbox" class="group" data-group="premium-group" checked> Best known shops</strong></p>
-          <div id="premium-group">
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.mantel.com/be/search/?q=" checked> <a href="https://www.mantel.com" target="_blank">Mantel</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike24.com/search-result?searchTerm=" checked> <a href="https://www.bike24.com" target="_blank">Bike24</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bikester.be/search/?q=" checked> <a href="" target="_blank"> <a href="https://www.bikester.be" target="_blank">Bikester</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.wiggle.nl/?s=" checked> <a href="https://www.wiggle.nl" target="_blank">Wiggle</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike-components.de/en/s/?keywords=" checked> <a href="" target="_blank"><a href="https://www.bike-components.de" target="_blank">Bike-Components</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.futurumshop.nl/zoeken?q=" checked> <a href="" target="_blank"><a href="https://www.futurumshop.nl" target="_blank">Futurumshop</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.vaneycksport.com/nl/catalogsearch/result/?q=" checked> <a href="" target="_blank"><a href="https://www.vaneycksport.com" target="_blank">Van Eyck</a></label><br>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.decathlon.be/nl/search?Ntt=" checked> <a href="" target="_blank"><a href="https://www.decathlon.be" target="_blank">Decathlon</a></label><br>
+          <div id="premium-group" class="check-group">
+                <label>
+                  <input type="checkbox" class="searchEngine premium-group" value="https://www.mantel.com/be/search/?q=" checked>
+                  Mantel <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a>
+                </label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike24.com/search-result?searchTerm=" checked> Bike24 <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bikester.be/search/?q=" checked> Bikester <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.wiggle.nl/?s=" checked> Wiggle <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike-components.de/en/s/?keywords=" checked> Bike-Components <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.futurumshop.nl/zoeken?q=" checked> Futurumshop <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.vaneycksport.com/nl/catalogsearch/result/?q=" checked> Van Eyck <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.decathlon.be/nl/search?Ntt=" checked> Decathlon <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
           </div>
         </div>
         
         <div class="col-md-6 mb-3">
           <p><strong><input type="checkbox" class="group" data-group="budget-group" checked> More ghetto and/or budget/cheapo</strong></p>
-          <div id="budget-group">
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> <a href="https://www.12gobiking.nl" target="_blank">12 Go Biking</a></label><br>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> <a href="https://vanbon-sport.nl" target="_blank">Van Bon Sport</a></label><br>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> <a href="https://www.mtbiker.shop" target="_blank">MTBiker</a></label><br>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> <a href="https://www.bike-discount.de" target="_blank">Bike discount</a></label><br>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> <a href="https://www.tradeinn.com" target="_blank">BikeInn</a></label><br>
+          <div id="budget-group" class="check-group">
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> 12 Go Biking <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> Van Bon Sport <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> MTBiker <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> Bike discount <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> BikeInn <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
           </div>
         </div>
       </div>
@@ -77,6 +77,7 @@
       function search() {
         var keyword = document.getElementById("keyword").value;
         var checkboxes = document.getElementsByClassName("searchEngine");
+        var selectedCount = 0;
         for (var i = 0; i < checkboxes.length; i++) {
           if (checkboxes[i].checked) {
             var url = checkboxes[i].value + encodeURIComponent(keyword);
@@ -118,8 +119,13 @@
         searchCheckboxes[i].addEventListener('click', updateSearchButtonText);
       }
       
+      function searchEngineLink(checkbox) {
+  var keyword = document.getElementById("keyword").value;
+  var url = checkbox.value + encodeURIComponent(keyword);
+  window.open(url, "_blank");
+}
+      
       
     </script>
-  
-</body>
+  </body>
 </html>
