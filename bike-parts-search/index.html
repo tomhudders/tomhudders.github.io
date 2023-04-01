@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - BikeParts price search v2</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container-sm">
+    <h1 class="pt-5">Bike Parts Webshop Search</h1>
+      <p class="pb-3">Tool to search bike parts in a few popular online bike shops. Or just use it as a list of shops.<br>
+        <strong>Beware:</strong> it opens a new tab for every selected shop and searches your keyword. </p>
+    <form onsubmit="search(); return false;">
+      <div class="card mb-5">
+        <div class="card-body">
+          <div class="mb-5">
+            <label for="keyword"><strong>Keyword:</strong></label>
+            <input type="text" id="keyword" class="form-control form-control-lg">
+            <div id="help" class="form-text">ex: CN-HG601, CS-R7000 11 speed,...</div>
+          </div>
+
+          <div>
+            <label for="predefined-keywords">Populair items:</label>
+            <select id="predefined-keywords" class="form-select" onchange="fillKeywordInput();">
+              <option value="">--</option>
+              <option value="CN-HG601">Shimano CN-HG601 Chain 11-speed</option>
+              <option value="CS-R7000 11 speed">Shimano 105 CS-R7000 Cassette 11-speed</option>
+              <option value="Continental 5000 28mm">Continental Grand Prix 5000 Folding Tire - 28-622</option>
+              <option value="L05A Resin">Shimano Disc Brake Pads - L05A Resin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3">
+          <p><strong><input type="checkbox" class="group" data-group="premium-group" checked> Best known shops</strong></p>
+          <div id="premium-group">
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.mantel.com/be/search/?q=" checked> <a href="https://www.mantel.com" target="_blank">Mantel</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike24.com/search-result?searchTerm=" checked> <a href="https://www.bike24.com" target="_blank">Bike24</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bikester.be/search/?q=" checked> <a href="" target="_blank"> <a href="https://www.bikester.be" target="_blank">Bikester</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.wiggle.nl/?s=" checked> <a href="https://www.wiggle.nl" target="_blank">Wiggle</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike-components.de/en/s/?keywords=" checked> <a href="" target="_blank"><a href="https://www.bike-components.de" target="_blank">Bike-Components</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.futurumshop.nl/zoeken?q=" checked> <a href="" target="_blank"><a href="https://www.futurumshop.nl" target="_blank">Futurumshop</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.vaneycksport.com/nl/catalogsearch/result/?q=" checked> <a href="" target="_blank"><a href="https://www.vaneycksport.com" target="_blank">Van Eyck</a></label><br>
+            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.decathlon.be/nl/search?Ntt=" checked> <a href="" target="_blank"><a href="https://www.decathlon.be" target="_blank">Decathlon</a></label><br>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <p><strong><input type="checkbox" class="group" data-group="budget-group" checked> More ghetto and/or budget/cheapo</strong></p>
+          <div id="budget-group">
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> <a href="https://www.12gobiking.nl" target="_blank">12 Go Biking</a></label><br>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> <a href="https://vanbon-sport.nl" target="_blank">Van Bon Sport</a></label><br>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> <a href="https://www.mtbiker.shop" target="_blank">MTBiker</a></label><br>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> <a href="https://www.bike-discount.de" target="_blank">Bike discount</a></label><br>
+            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> <a href="https://www.tradeinn.com" target="_blank">BikeInn</a></label><br>
+          </div>
+        </div>
+      </div>
+      <div class="d-grid">
+        <button type="submit" id="searchButton" class="btn btn-primary btn-lg btn-block">Search <span class="info">! Opens <strong>13</strong> new tabs !</span></button>
+      </div>
+    </form>
+    </div>
+    
+    <script>
+      function search() {
+        var keyword = document.getElementById("keyword").value;
+        var checkboxes = document.getElementsByClassName("searchEngine");
+        for (var i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            var url = checkboxes[i].value + encodeURIComponent(keyword);
+            window.open(url, "_blank");
+          }
+        }
+      }
+      
+      function updateSearchButtonText() {
+        var selectedCheckboxes = document.querySelectorAll('.searchEngine:checked');
+        var searchButton = document.getElementById('searchButton');
+        searchButton.innerHTML = 'Search <span class="info">! Opens <strong>' + selectedCheckboxes.length + '</strong> new tabs !</span>';
+      }
+      
+      function fillKeywordInput() {
+        var keywordInput = document.getElementById("keyword");
+        var predefinedKeywordSelect = document.getElementById("predefined-keywords");
+        keywordInput.value = predefinedKeywordSelect.value;
+      }
+            
+      function toggleGroup(group) {
+        var groupCheckboxes = document.getElementsByClassName(group);
+        var groupCheckbox = document.querySelector(".group[data-group='" + group + "']");
+        for (var i = 0; i < groupCheckboxes.length; i++) {
+          groupCheckboxes[i].checked = groupCheckbox.checked;
+        }
+        updateSearchButtonText();
+      }
+      
+      var groupCheckboxes = document.getElementsByClassName("group");
+      for (var i = 0; i < groupCheckboxes.length; i++) {
+        groupCheckboxes[i].addEventListener("change", function() {
+          toggleGroup(this.dataset.group);
+        });
+      }
+      
+      var searchCheckboxes = document.getElementsByClassName('searchEngine');
+      for (var i = 0; i < searchCheckboxes.length; i++) {
+        searchCheckboxes[i].addEventListener('click', updateSearchButtonText);
+      }
+      
+      
+    </script>
+  </body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>

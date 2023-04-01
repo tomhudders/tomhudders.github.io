@@ -1,0 +1,23 @@
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+h1,
+.btn {
+  font-weight: 700;
+}
+
+.container-sm {
+  width: 800px;
+}
+
+label {
+  margin-bottom: .5rem;
+}
+
+.info {
+  display: block;
+  font-size: .66rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
