@@ -2,8 +2,7 @@
   font-family: 'Inter', sans-serif;
 }
 
-h1,
-.btn {
+h1 {
   font-weight: 700;
 }
 
@@ -20,4 +19,10 @@ label {
   font-size: .66rem;
   text-transform: uppercase;
   font-weight: 400;
+}
+
+.check-group label {
+  display: block;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+  padding: .5rem 0 1rem;
 }
