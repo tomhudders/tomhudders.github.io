@@ -4,79 +4,119 @@
     <meta charset="UTF-8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚴</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet"> 
-  <title>Bike Parts Webshop Search</title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet"> 
+    <title>Bike Parts Webshop Search</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
   </head>
+  
   <body class="bg-light">
     <div class="container-sm">
-    <h1 class="pt-5">Bike Parts Webshop Search</h1>
+      <h1 class="pt-5">Bike Parts Webshop Search</h1>
       <p class="pb-3">Tool to search bike parts in a few popular online bike shops. Or just use it as a list of shops.<br>
-        <strong>Beware:</strong> it opens a new tab for every selected shop and searches your keyword. </p>
-    <form onsubmit="search(); return false;">
-      <div class="card mb-5">
-        <div class="card-body">
-          <div class="mb-5">
-            <label for="keyword"><strong>Keyword:</strong></label>
-            <input type="text" id="keyword" class="form-control form-control-lg">
-            <div id="help" class="form-text">ex: CN-HG601, CS-R7000 11 speed,...</div>
-          </div>
+      <strong>Beware:</strong> it opens a new tab for every selected shop and searches your keyword. </p>
+      <form onsubmit="search(); return false;">
+        <div class="card mb-5">
+          <div class="card-body">
+            <div class="mb-5">
+              <label class="mb-2" for="keyword"><strong>Keyword:</strong></label>
+              <input type="text" id="keyword" class="form-control form-control-lg">
+              <div id="help" class="form-text">ex: CN-HG601, CS-R7000 11 speed,...</div>
+            </div>
 
-          <div>
-            <label for="predefined-keywords">Populair items:</label>
-            <select id="predefined-keywords" class="form-select" onchange="fillKeywordInput();">
-              <option value="">--</option>
-              <option value="CN-HG601">Shimano CN-HG601 Chain 11-speed</option>
-              <option value="CS-R7000 11 speed">Shimano 105 CS-R7000 Cassette 11-speed</option>
-              <option value="Continental 5000 28mm">Continental Grand Prix 5000 Folding Tire - 28-622</option>
-              <option value="L05A Resin">Shimano Disc Brake Pads - L05A Resin</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row gx-5 mb-3">
-        <div class="col-md-6 mb-5">
-          <p><strong><input type="checkbox" class="group" data-group="premium-group" checked> Best known shops</strong></p>
-          <div id="premium-group" class="check-group">
-                <label>
-                  <input type="checkbox" class="searchEngine premium-group" value="https://www.mantel.com/be/search/?q=" checked>
-                  Mantel <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a>
-                </label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike24.com/search-result?searchTerm=" checked> Bike24 <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bikester.be/search/?q=" checked> Bikester <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.wiggle.nl/?s=" checked> Wiggle <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.bike-components.de/en/s/?keywords=" checked> Bike-Components <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.futurumshop.nl/zoeken?q=" checked> Futurumshop <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.vaneycksport.com/nl/catalogsearch/result/?q=" checked> Van Eyck <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine premium-group" value="https://www.decathlon.be/nl/search?Ntt=" checked> Decathlon <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+            <div>
+              <label class="mb-2" for="predefined-keywords">Populair items:</label>
+              <select id="predefined-keywords" class="form-select" onchange="fillKeywordInput();">
+                <option value="">--</option>
+                <option value="CN-HG601">Shimano CN-HG601 Chain 11-speed</option>
+                <option value="CS-R7000 11 speed">Shimano 105 CS-R7000 Cassette 11-speed</option>
+                <option value="Continental 5000 28mm">Continental Grand Prix 5000 Folding Tire - 28-622</option>
+                <option value="L05A Resin">Shimano Disc Brake Pads - L05A Resin</option>
+              </select>
+            </div>
           </div>
         </div>
         
-        <div class="col-md-6 mb-3">
-          <p><strong><input type="checkbox" class="group" data-group="budget-group" checked> More ghetto and/or budget/cheapo</strong></p>
-          <div id="budget-group" class="check-group">
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> 12 Go Biking <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> Van Bon Sport <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> MTBiker <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> Bike discount <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
-            <label><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> BikeInn <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab </a></label>
+        <div class="row gx-5 mb-3">
+          <div class="col-md-6 mb-5">
+            <p><strong><input type="checkbox" class="group" data-group="premium-group" checked> Best known shops</strong></p>
+            <div id="premium-group" class="check-group">
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.mantel.com/be/search/?q=" checked> Mantel</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.bike24.com/search-result?searchTerm=" checked> Bike24</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.bikester.be/search/?q=" checked> Bikester</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.wiggle.nl/?s=" checked> Wiggle</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.bike-components.de/en/s/?keywords=" checked> Bike-Components</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.futurumshop.nl/zoeken?q=" checked> Futurumshop</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.vaneycksport.com/nl/catalogsearch/result/?q=" checked> Van Eyck</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine premium-group" value="https://www.decathlon.be/nl/search?Ntt=" checked> Decathlon</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+            </div>
+          </div>
+          
+          <div class="col-md-6 mb-3">
+            <p><strong><input type="checkbox" class="group" data-group="budget-group" checked> More ghetto and/or budget/cheapo</strong></p>
+            <div id="budget-group" class="check-group">
+              <label>
+                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> 12 Go Biking</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> Van Bon Sport</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> MTBiker</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> Bike discount</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> BikeInn</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+              <label>
+                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.salden.nl/catalogsearch/result/index/?q=" checked> Salden</span>
+                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="d-grid">
-        <button type="submit" id="searchButton" class="btn btn-primary btn-lg btn-block mb-2">Full Search <span class="info">! Opens <strong>13</strong> new tabs !</span></button>
-        <div class="alert alert-warning" role="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-</svg> To open all tabs at once you will need to change the browser setting to allow this url to open multiple tabs.
+        <div class="d-grid">
+          <button type="submit" id="searchButton" class="btn btn-primary btn-lg btn-block mb-2">Full Search <span class="info">! Opens <strong>13</strong> new tabs !</span></button>
+          <div class="alert alert-warning" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            </svg> To open all tabs at once you will need to change the browser setting to allow this url to open multiple tabs.
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
     
     <script>
@@ -126,10 +166,10 @@
       }
       
       function searchEngineLink(checkbox) {
-  var keyword = document.getElementById("keyword").value;
-  var url = checkbox.value + encodeURIComponent(keyword);
-  window.open(url, "_blank");
-}
+        var keyword = document.getElementById("keyword").value;
+        var url = checkbox.value + encodeURIComponent(keyword);
+        window.open(url, "_blank");
+      }
       
       
     </script>
