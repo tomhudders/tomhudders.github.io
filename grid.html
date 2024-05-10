@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OSM with 1km Grid Overlay</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.3.1/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.3.1/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+      // Create a map instance
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          // Add a layer of OpenStreetMap tiles
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([3.7174, 51.0543]), // Center on Ghent, Belgium
+          zoom: 12
+        })
+      });
+
+      // Function to create a 1km x 1km grid overlay
+      function createGrid() {
+        var gridSize = 1; // 1km
+        var degreesPerKm = 1 / 111; // Convert km to degrees
+
+        // Get the current extent of the map
+        var extent = map.getView().calculateExtent(map.getSize());
+        var bottomLeft = ol.proj.toLonLat([extent[0], extent[1]]);
+        var topRight = ol.proj.toLonLat([extent[2], extent[3]]);
+
+        // Calculate the start and end points of the grid
+        var startLat = Math.floor(bottomLeft[1] / degreesPerKm) * degreesPerKm;
+        var endLat = Math.ceil(topRight[1] / degreesPerKm) * degreesPerKm;
+        var startLon = Math.floor(bottomLeft[0] / degreesPerKm) * degreesPerKm;
+        var endLon = Math.ceil(topRight[0] / degreesPerKm) * degreesPerKm;
+
+        // Create an array to hold the grid lines
+        var gridFeatures = [];
+
+        // Generate the grid lines
+        for (var lat = startLat; lat <= endLat; lat += degreesPerKm) {
+          for (var lon = startLon; lon <= endLon; lon += degreesPerKm) {
+            // Create a square polygon for the grid cell
+            var squareCoords = [
+              [lon, lat],
+              [lon + degreesPerKm, lat],
+              [lon + degreesPerKm, lat + degreesPerKm],
+              [lon, lat + degreesPerKm],
+              [lon, lat] // Close the polygon
+            ].map(coords => ol.proj.fromLonLat(coords));
+
+            // Create a feature with the square geometry
+            var squareFeature = new ol.Feature({
+              geometry: new ol.geom.Polygon([squareCoords])
+            });
+
+            // Add the feature to the array
+            gridFeatures.push(squareFeature);
+          }
+        }
+
+        // Create a vector source with the grid features
+        var gridSource = new ol.source.Vector({
+          features: gridFeatures
+        });
+
+        // Create a vector layer with the grid source
+        var gridLayer = new ol.layer.Vector({
+          source: gridSource,
+          style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: 'blue',
+              width: 1
+            })
+          })
+        });
+
+        // Remove the previous grid layer if it exists
+        map.getLayers().forEach(function(layer) {
+          if (layer.get('name') === 'grid') {
+            map.removeLayer(layer);
+          }
+        });
+
+        // Set a name property for the grid layer
+        gridLayer.set('name', 'grid');
+
+        // Add the grid layer to the map
+        map.addLayer(gridLayer);
+      }
+
+      // Call the createGrid function when the map is moved
+      map.on('moveend', createGrid);
+
+      // Initialize the grid
+      createGrid();
+    </script>
+  </body>
+</html>
