@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMB is racing</title>
+    <link rel="stylesheet" href="screen.css">
+</head>
+<body>
+
+    <div class="header">
+        <img class="hmb-logo" src="img/logo.jpg">
+        <span>on</span>
+        <img class="twitch-logo" src="img/logo-twitch.svg">
+    </div>
+
+    <div id="spotlight" class="spotlight"><span>Pick a live channel</span></div>
+    
+    <div class="streams">
+        <div id="stream1" class="stream">
+            <div id="embed1" class="embed"></div>
+            <div class="author">
+                <div class="name">Stef</div>
+                <button onclick="setSpotlight('stefverv', 'stream1')">Spotlight</button>
+            </div>
+        </div>
+        <div id="stream2" class="stream">
+            <div id="embed2" class="embed"></div>
+            <div class="author">
+                <div class="name">Fons</div>
+                <button onclick="setSpotlight('zwiftapalooza', 'stream2')">Spotlight</button>
+            </div>
+        </div>
+        <div id="stream3" class="stream">
+            <div id="embed3" class="embed"></div>
+            <div class="author">
+                <div class="name">Tom</div>
+                <button onclick="setSpotlight('tomh_00', 'stream3')">Spotlight</button>
+            </div>
+        </div>
+        <div id="stream4" class="stream">
+            <div id="embed4" class="embed"></div>
+            <div class="author">
+                <div class="name">WD MC</div>
+                <button onclick="setSpotlight('wd_mc', 'stream4')">Spotlight</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <script>
+        const channels = ['stefverv', 'zwiftapalooza', 'tomh_00', 'wd_mc'];
+        const embeds = {};
+        let currentSpotlightStream = null;
+
+        function createEmbed(channel, elementId, layout = 'video') {
+            return new Twitch.Embed(elementId, {
+                width: '100%',
+                height: '100%',
+                channel: channel,
+                layout: layout,
+                autoplay: true
+            });
+        }
+
+        function initializeStreams() {
+            channels.forEach((channel, index) => {
+                const elementId = `embed${index + 1}`;
+                embeds[elementId] = createEmbed(channel, elementId);
+            });
+            //setSpotlight(channels[0]); // Set initial spotlight to the first channel
+        }
+
+        function setSpotlight(channel, streamId) {
+            const spotlight = document.getElementById('spotlight');
+            if (!spotlight) {
+                console.error("Spotlight element is missing in the DOM.");
+                return;
+            }
+            
+            spotlight.innerHTML = ''; // Clear the spotlight area
+
+            // Create a new embed in the spotlight area
+            new Twitch.Embed("spotlight", {
+                width: '100%',
+                height: '100%',
+                channel: channel,
+                layout: 'video-with-chat',
+                autoplay: true
+            });
+
+            // Reset the previous spotlighted stream, if any
+            if (currentSpotlightStream && document.getElementById(currentSpotlightStream)) {
+                document.getElementById(currentSpotlightStream).classList.remove('active');
+            }
+
+            // Set the new spotlighted stream
+            const newSpotlightStream = document.getElementById(streamId);
+            if (newSpotlightStream) {
+                newSpotlightStream.classList.add('active');
+                currentSpotlightStream = streamId;
+            } else {
+                console.error(`Stream element with ID '${streamId}' is missing in the DOM.`);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initializeStreams);
+    </script>
+
+</body>
+</html>
