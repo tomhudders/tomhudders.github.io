@@ -86,30 +86,44 @@
           </div>
           
           <div class="col-md-6 mb-3">
-            <p><strong><input type="checkbox" class="group" data-group="budget-group" checked> More ghetto and/or budget/cheapo</strong></p>
-            <div id="budget-group" class="check-group">
+            <div class="mb-5">
+              <p><strong><input type="checkbox" class="group" data-group="budget-group" checked> More ghetto and/or budget/cheapo</strong></p>
+              <div id="budget-group" class="check-group">
+                <label>
+                  <span><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> 12 Go Biking</span>
+                  <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+                </label>
+                <label>
+                  <span><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> Van Bon Sport</span>
+                  <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+                </label>
+                <label>
+                  <span><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> MTBiker</span>
+                  <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+                </label>
+                <label>
+                  <span><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> Bike discount</span>
+                  <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+                </label>
+                <label>
+                  <span><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> BikeInn</span>
+                  <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+                </label>
+                <label>
+                  <span><input type="checkbox" class="searchEngine budget-group" value="https://www.salden.nl/catalogsearch/result/index/?q=" checked> Salden</span>
+                  <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
+                </label>
+              </div>
+            </div>
+
+            <p><strong><input type="checkbox" class="group" data-group="2ndhand-group"> 2nd Hand Shops (more for clothing)</strong></p>
+            <div id="2ndhand-group" class="check-group">
               <label>
-                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.12gobiking.nl/catalogsearch/result/?q=" checked> 12 Go Biking</span>
+                <span><input type="checkbox" class="searchEngine 2ndhand-group" value="https://www.vinted.be/catalog?search_text="> Vinted</span>
                 <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
               </label>
               <label>
-                <span><input type="checkbox" class="searchEngine budget-group" value="https://vanbon-sport.nl/zoeken?zoek=" checked> Van Bon Sport</span>
-                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
-              </label>
-              <label>
-                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.mtbiker.shop/shop/search?s=" checked> MTBiker</span>
-                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
-              </label>
-              <label>
-                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.bike-discount.de/en/search?sSearch=" checked> Bike discount</span>
-                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
-              </label>
-              <label>
-                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.tradeinn.com/bikeinn/en?products_search%5Bquery%5D=" checked> BikeInn</span>
-                <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
-              </label>
-              <label>
-                <span><input type="checkbox" class="searchEngine budget-group" value="https://www.salden.nl/catalogsearch/result/index/?q=" checked> Salden</span>
+                <span><input type="checkbox" class="searchEngine 2ndhand-group" value="https://www.2dehands.be/q/"> 2dehands</span>
                 <a href="#" class="btn btn-sm btn-success float-end" onclick="searchEngineLink(this.parentNode.querySelector('.searchEngine'))">open tab</a>
               </label>
             </div>
