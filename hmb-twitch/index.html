@@ -46,11 +46,18 @@
                 <button onclick="setSpotlight('wd_mc', 'stream4')">Spotlight</button>
             </div>
         </div>
+        <div id="stream5" class="stream">
+            <div id="embed5" class="embed"></div>
+            <div class="author">
+                <div class="name">Jappelapeño 🌶️</div>
+                <button onclick="setSpotlight('jappelapeno', 'stream5')">Spotlight</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <script>
-        const channels = ['stefverv', 'zwiftapalooza', 'tomh_00', 'wd_mc'];
+        const channels = ['stefverv', 'zwiftapalooza', 'tomh_00', 'wd_mc', 'jappelapeno'];
         const embeds = {};
         let currentSpotlightStream = null;
 
