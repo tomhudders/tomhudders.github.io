@@ -1,0 +1,99 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f6f7fb;
+  margin: 0;
+  padding: 30px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: auto 400px;
+  gap: 24px;
+  align-items: start;
+  max-width: 1200px;
+}
+
+table {
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+th, td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Highlighting */
+.required {
+  background-color: #e6f6ea;
+}
+
+.critical {
+  background-color: #ffe3e3;
+}
+
+/* Result card */
+.result-card {
+  background: white;
+  padding: 18px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.result-card h2 {
+  margin-top: 0;
+}
+
+.result-card .success {
+  color: #157347;
+  font-weight: 600;
+}
+
+.result-card .error {
+  color: #b02a37;
+  font-weight: 600;
+}
+
+.result-block {
+  margin-bottom: 12px;
+}
+
+.result-label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.small {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.none {
+    display: none;
+}
+
+.primary {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
