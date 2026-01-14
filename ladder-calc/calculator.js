@@ -1,26 +1,65 @@
 /**********************
  * SCORING
  **********************/
-const points = {
-  1: 10, 2: 9, 3: 8, 4: 7, 5: 6,
-  6: 5, 7: 4, 8: 3, 9: 2, 10: 1
+const scenarios = {
+  5: {
+    ridersPerTeam: 5,
+    activePositions: 10,
+    minWinPoints: 28
+  },
+  4: {
+    ridersPerTeam: 4,
+    activePositions: 8,
+    minWinPoints: 27
+  },
+  3: {
+    ridersPerTeam: 3,
+    activePositions: 6,
+    minWinPoints: 23
+  }
 };
+
+function buildPoints(activePositions) {
+  const pts = {};
+  let score = 10;
+  for (let i = 1; i <= activePositions; i++) {
+    pts[i] = score--;
+  }
+  return pts;
+}
+
 
 /**********************
  * BUILD TABLE
  **********************/
 const tbody = document.getElementById("rows");
+const scenarioSelect = document.getElementById("scenario");
 
-for (let pos = 1; pos <= 10; pos++) {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `
-    <td>${pos}</td>
-    <td><input type="checkbox" data-team="A" data-pos="${pos}"></td>
-    <td><input type="checkbox" data-team="B" data-pos="${pos}"></td>
-    <td>${points[pos]}</td>
-  `;
-  tbody.appendChild(tr);
+let points = {};
+let currentScenario = scenarios[5];
+
+function buildTable() {
+  tbody.innerHTML = "";
+
+  points = buildPoints(currentScenario.activePositions);
+
+  for (let pos = 1; pos <= 10; pos++) {
+    const disabled = pos > currentScenario.activePositions;
+
+    const tr = document.createElement("tr");
+    if (disabled) tr.style.opacity = 0.4;
+
+    tr.innerHTML = `
+      <td>${pos}</td>
+      <td><input type="checkbox" data-team="A" data-pos="${pos}" ${disabled ? "disabled" : ""}></td>
+      <td><input type="checkbox" data-team="B" data-pos="${pos}" ${disabled ? "disabled" : ""}></td>
+      <td>${points[pos] ?? "-"}</td>
+    `;
+    tbody.appendChild(tr);
+  }
 }
+
+buildTable();
 
 /**********************
  * PREVENT DOUBLE ASSIGNMENT
@@ -135,8 +174,11 @@ function calculate() {
     }
   });
 
-  if (fixedA.length > 5 || fixedB.length > 5) {
-    output("❌ Each team can have at most 5 riders.");
+  if (
+    fixedA.length > currentScenario.ridersPerTeam ||
+    fixedB.length > currentScenario.ridersPerTeam
+  ) {
+    output(`❌ Each team can have at most ${currentScenario.ridersPerTeam} riders.`);
     return;
   }
 
@@ -144,14 +186,15 @@ function calculate() {
   const fixedPointsB = fixedB.reduce((s, p) => s + points[p], 0);
 
   const remainingPositions = [];
-  for (let p = 1; p <= 10; p++) {
+  for (let p = 1; p <= currentScenario.activePositions; p++) {
     if (!fixedA.includes(p) && !fixedB.includes(p)) {
       remainingPositions.push(p);
     }
   }
 
-  const remainingA = 5 - fixedA.length;
-  const remainingB = 5 - fixedB.length;
+  const remainingA = currentScenario.ridersPerTeam - fixedA.length;
+  const remainingB = currentScenario.ridersPerTeam - fixedB.length;
+
 
   let winningScenarios = [];
 
@@ -163,7 +206,7 @@ function calculate() {
     const totalB =
       fixedPointsB + Bgets.reduce((s, p) => s + points[p], 0);
 
-    if (totalA > totalB) {
+    if (totalA > totalB && totalA >= currentScenario.minWinPoints) {
       winningScenarios.push({ Agets, Bgets, totalA, totalB });
     }
   }
@@ -277,3 +320,9 @@ function highlight(required, critical) {
     row.classList.add("critical");
   });
 }
+
+scenarioSelect.addEventListener("change", () => {
+  currentScenario = scenarios[scenarioSelect.value];
+  buildTable();
+  calculate();
+});
