@@ -197,6 +197,7 @@ function calculate() {
 
 
   let winningScenarios = [];
+  let allScenarios = [];
 
   for (const Agets of combinations(remainingPositions, remainingA)) {
     const Bgets = remainingPositions.filter(p => !Agets.includes(p));
@@ -206,19 +207,55 @@ function calculate() {
     const totalB =
       fixedPointsB + Bgets.reduce((s, p) => s + points[p], 0);
 
+    allScenarios.push({ Agets, Bgets, totalA, totalB });
+
     if (totalA > totalB && totalA >= currentScenario.minWinPoints) {
       winningScenarios.push({ Agets, Bgets, totalA, totalB });
     }
   }
 
   if (winningScenarios.length === 0) {
-    output(`
+    // Find the best possible result for HMB even though they can't win
+    allScenarios.sort((a, b) => (b.totalA - b.totalB) - (a.totalA - a.totalB));
+    const best = allScenarios[0];
+
+    let html = `
   <h2 class="error">HMB cannot win anymore</h2>
   <p class="small">Even in the best remaining scenario.</p>
-`);
-clearHighlights();
+`;
 
-    clearHighlights();
+    if (best) {
+      html += `
+  <div class="result-block none">
+    <span class="result-label">Fixed HMB:</span>
+    ${fixedA.join(", ") || "none"}<br>
+    <span class="result-label">Fixed Opponent:</span>
+    ${fixedB.join(", ") || "none"}
+  </div>
+
+  <div class="result-block primary">
+    <span class="result-label">Best possible positions for HMB:</span><br>
+    ${best.Agets.join(", ")}
+  </div>
+
+  <div class="result-block">
+    <span class="result-label">Opponent gets:</span><br>
+    ${best.Bgets.join(", ")}
+  </div>
+
+  <div class="result-block">
+    <span class="result-label">Best possible points</span><br>
+    HMB: ${best.totalA}<br>
+    Opponent: ${best.totalB}<br>
+    <strong>Deficit: ${best.totalA - best.totalB}</strong>
+  </div>
+`;
+      highlight(best.Agets, []);
+    } else {
+      clearHighlights();
+    }
+
+    output(html);
     return;
   }
 
