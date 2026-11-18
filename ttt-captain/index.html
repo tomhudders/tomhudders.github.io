@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TTT Captain</title>
+<style>
+:root{--g1:#fcfcfd;--g2:#f9f9fb;--g3:#f0f0f3;--g4:#e8e8ec;--g5:#e0e1e6;--g6:#d9d9e0;--g7:#cdced6;--g8:#b9bbc6;--g9:#8b8d98;--g11:#60646c;--g12:#1c2024;--o3:#ffefd6;--o7:#f5ae73;--o8:#ec9455;--o9:#f76b15;--o10:#ef5f00;--o11:#cc4e00;--r3:#ffefef;--r7:#eb9091;--r9:#e5484d;--r11:#ce2c31;--bg:#fcfcfd;--panel:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--g1:#111113;--g2:#18191b;--g3:#212225;--g4:#272a2d;--g5:#2e3135;--g6:#363a3f;--g7:#43484e;--g8:#5a6169;--g9:#696e77;--g11:#b0b4ba;--g12:#edeef0;--o3:#331e0b;--o7:#7e451d;--o8:#a35829;--o9:#f76b15;--o10:#ff801f;--o11:#ffa057;--r3:#3b1219;--r7:#8c333a;--r9:#e5484d;--r11:#ff9592;--bg:#111113;--panel:#18191b;color-scheme:dark}}
+:root[data-theme="dark"]{--g1:#111113;--g2:#18191b;--g3:#212225;--g4:#272a2d;--g5:#2e3135;--g6:#363a3f;--g7:#43484e;--g8:#5a6169;--g9:#696e77;--g11:#b0b4ba;--g12:#edeef0;--o3:#331e0b;--o7:#7e451d;--o8:#a35829;--o9:#f76b15;--o10:#ff801f;--o11:#ffa057;--r3:#3b1219;--r7:#8c333a;--r9:#e5484d;--r11:#ff9592;--bg:#111113;--panel:#18191b;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{position:relative;margin:0;background:var(--bg);color:var(--g12);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",system-ui,sans-serif;padding:16px;-webkit-font-smoothing:antialiased}
+.w{max-width:1000px;margin:0 auto;display:grid;gap:16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.logo b{color:var(--o9)}
+.tr{display:flex;gap:8px;align-items:center}
+.badge{background:var(--r9);color:#fff;font-weight:600;font-size:12px;letter-spacing:.02em;padding:2px 8px;border-radius:4px}
+.c{background:var(--panel);border-radius:8px;padding:16px;box-shadow:0 0 0 1px var(--g5)}
+h2{margin:0 0 12px;font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--g12)}
+.mu{color:var(--g11);font-size:13px}
+.lb{font-size:13px;font-weight:500;color:var(--g11)}
+.hero{display:grid;grid-template-columns:1fr 1.15fr;gap:24px}
+.g{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}
+@media (max-width:720px){.hero,.g{grid-template-columns:1fr!important}}
+#clk{font-size:clamp(56px,13vw,92px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1.05;letter-spacing:-.04em}
+.adj{margin-top:12px}
+.btn{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+#nw{font-size:clamp(32px,8vw,48px);font-weight:700;line-height:1.1;letter-spacing:-.025em;overflow-wrap:anywhere;margin-top:2px}
+#lf{font-size:clamp(44px,11vw,68px);font-weight:700;color:var(--o9);font-variant-numeric:tabular-nums;line-height:1.1;letter-spacing:-.03em}
+#lf.hot{color:var(--r9);animation:pl 1s infinite}
+@keyframes pl{50%{opacity:.55}}
+.bar{height:8px;background:var(--g4);border-radius:99px;overflow:hidden;margin:8px 0 10px}
+.bar i{display:block;height:100%;width:0;background:var(--o9);border-radius:99px;transition:width .2s linear}
+#nx{font-size:16px;font-weight:500;color:var(--g11)}
+.pr{border-radius:6px;padding:0 12px;height:44px;margin-bottom:2px;position:relative;display:flex;align-items:center;font-size:15px;font-variant-numeric:tabular-nums}
+.pr.past{color:var(--g9)}
+.pr.cur{background:var(--o3);color:var(--o11);font-weight:600;box-shadow:inset 0 0 0 1px var(--o7);overflow:hidden}
+.rw{display:flex;justify-content:space-between;gap:12px;width:100%}
+.pb{position:absolute;left:0;bottom:0;height:3px;width:100%}
+.pb i{display:block;height:100%;background:var(--o9)}
+.pr:not(.cur) .pb{display:none}
+#pl{position:relative;height:322px;overflow-y:auto;overscroll-behavior:contain}
+.dr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--g5)}
+.dr:last-child{border:0}
+.dr>input[type=text]{flex:1;min-width:90px;box-shadow:none;background:transparent;font-weight:500;padding:0 4px}
+.dr.sk>input[type=text]{opacity:.45;text-decoration:line-through}
+.dr.sk .sg{opacity:.45}
+.sg{display:flex;background:var(--g3);border-radius:6px;padding:2px}
+.sg label{position:relative}
+.sg input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer;margin:0}
+.sg span{display:block;padding:0 10px;height:26px;line-height:26px;border-radius:4px;font-weight:500;font-size:13px;color:var(--g11)}
+.sg input:checked+span{background:var(--panel);color:var(--g12);box-shadow:0 0 0 1px var(--g5),0 1px 2px rgba(0,0,0,.1)}
+.sg input:focus-visible+span{outline:2px solid var(--o8);outline-offset:1px}
+.mv{display:flex;flex-direction:column;gap:2px}
+.mv button{height:14px;width:22px;padding:0;font-size:8px;line-height:1;border-radius:3px}
+button,select,input[type=text],input[type=time],input[type=number]{font:inherit;font-size:14px;color:var(--g12)}
+button{height:32px;padding:0 12px;border:0;border-radius:6px;background:var(--g3);font-weight:500;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+button:hover{background:var(--g4)}
+button:active{background:var(--g5)}
+.pri{background:var(--o9);color:#fff}
+.pri:hover{background:var(--o10)}
+.sm{height:24px;padding:0 8px;font-size:12px;border-radius:4px}
+.skb,.stb{background:transparent;box-shadow:inset 0 0 0 1px var(--g7);color:var(--g11)}
+.skb:hover,.stb:hover{background:var(--g3)}
+.stb.on{background:var(--o3);box-shadow:inset 0 0 0 1px var(--o7);color:var(--o11)}
+.skb.on{background:var(--r3);box-shadow:inset 0 0 0 1px var(--r7);color:var(--r11)}
+.run .stb{display:none}
+input[type=text],input[type=time],input[type=number],select{height:32px;padding:0 10px;border:0;border-radius:6px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--g7)}
+input[type=text]:focus,input[type=time]:focus,input[type=number]:focus,select:focus{outline:2px solid var(--o8);outline-offset:-1px}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--o8);outline-offset:2px}
+.row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-top:8px}
+.row label{display:grid;gap:4px}
+.row label .mu{font-weight:500;font-size:12px}
+details.c>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:16px;letter-spacing:-.01em}
+details.c>summary::-webkit-details-marker{display:none}
+details.c>summary::after{content:"";width:7px;height:7px;border-right:2px solid var(--g11);border-bottom:2px solid var(--g11);transform:rotate(45deg);margin-right:4px;transition:transform .15s}
+details.c[open]>summary::after{transform:rotate(-135deg)}
+details.c[open]>summary{margin-bottom:8px}
+#arm{position:absolute;top:2px;left:0;right:0;text-align:center;font-size:12px;line-height:1.2;font-weight:500;color:var(--o11);pointer-events:none}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="top">
+    <div class="logo">TTT <b>Captain</b></div>
+    <div class="tr"><span class="badge" id="tb" hidden>TEST MODE</span><button class="pill" id="mu">🔊 Voice on</button></div>
+  </div>
+  <div id="arm">Click anywhere once to enable the voice</div>
+
+  <section class="c hero">
+    <div>
+      <div class="lb" id="cl">Race Clock</div>
+      <div id="clk">0:00</div>
+      <div class="adj">
+        <div class="lb">Adjust <span id="adjv"></span></div>
+        <div class="btn">
+          <button class="pill sm" id="m1">−1s</button><button class="pill sm" id="p1">+1s</button><button class="pill sm" id="a0">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="lb" id="nl">Now pulling</div>
+      <div id="nw">—</div>
+      <div id="lf"></div>
+      <div class="bar"><i id="nb"></i></div>
+      <div id="nx"></div>
+    </div>
+  </section>
+
+  <div class="g">
+    <section class="c"><h2>Pulls</h2><div id="pl"></div></section>
+    <section class="c"><h2>Durations</h2><div id="du"></div><div class="mu" style="margin-top:10px">▲▼ change the pull order. Starter pulls the first 1 minute of the race, then the rotation continues with the next rider; there is no announcement at the start, only the 5-second warning. Skip takes a rider out of the next pulls until you switch it off again.</div></section>
+  </div>
+
+  <section class="c">
+    <h2>Test mode</h2>
+    <div class="mu">Runs a fake race from 0:00 with your riders so you can see the tool and hear the voice. Your settings are not changed.</div>
+    <div class="btn">
+      <button class="pill pri" id="ts">Start test race</button>
+      <button class="pill" id="tk">Skip to next switch</button>
+      <button class="pill" id="te">Stop test</button>
+    </div>
+  </section>
+
+  <details class="c">
+    <summary>Race settings</summary>
+    <div class="row">
+      <label><span class="mu">Race start (local time)</span><input id="rs" type="time" value="19:30"></label>
+      <label><span class="mu">Expected duration (min)</span><input id="ex" type="number" min="5" max="240" value="45" style="width:120px"></label>
+      <label><span class="mu">Riders</span><select id="nr"><option>4</option><option>5</option><option>6</option></select></label>
+    </div>
+    <div class="btn">
+      <button class="pill" id="sn">Start now (clock 0:00)</button>
+      <button class="pill" id="us">Use start time</button>
+    </div>
+    <div class="mu" id="md" style="margin-top:8px"></div>
+  </details>
+
+  <details class="c">
+    <summary>Voice &amp; texts</summary>
+    <div class="row">
+      <select id="lg"><option value="nl">Nederlands</option><option value="en">English</option></select>
+      <select id="vo" style="flex:1;min-width:0"></select>
+    </div>
+    <div class="mu" id="vh" style="margin-top:6px"></div>
+    <div class="row">
+      <label><span class="mu">Voice timing offset (seconds, + = speak later)</span><input id="of" type="number" step="0.1" min="-5" max="5" value="0" style="width:120px"></label>
+      <button class="pill" id="cr">Reset learned timing</button>
+    </div>
+    <div class="mu" id="ci" style="margin-top:6px"></div>
+    <div class="mu" style="margin:12px 0 8px">Placeholders: {cur} rider pulling, {dur} seconds, {end} end time, {next} next rider, {ndur} next seconds, {nend} next end time. Edits are kept per language.</div>
+    <div class="mu">5 seconds before the switch</div>
+    <div class="row" style="margin:4px 0 10px"><input id="tw" type="text" style="flex:1;min-width:0"><button class="pill" id="tw1">Test voice</button></div>
+    <div class="mu">At the switch</div>
+    <div class="row" style="margin:4px 0 0"><input id="tg" type="text" style="flex:1;min-width:0"><button class="pill" id="tg1">Test voice</button></div>
+    <div class="btn"><button class="pill" id="td">Reset texts</button></div>
+  </details>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const DUR=[30,45,60];
+let nid=1,starterId=null;
+let riders=[["Jasper",30],["Stef",45],["Alexander",30],["Willem",60]].map(([n,d])=>({id:nid++,n,d,skip:false}));
+let pulls=[],adj=0,mode="time",nowT=0,tBase=0,tT=0,spd=1,lastGo=-1,lastWarn=-1,voiceOn=true,want="",cal={},lastSig="",lastA=-2;
+const TP0={nl:{go:"{cur} tot {end}",warn:"{cur} vijf seconden"},en:{go:"{cur} until {end}",warn:"{cur} five seconds"}};
+let TP=JSON.parse(JSON.stringify(TP0));
+const lg=()=>$("lg").value;
+const f2=n=>String(n).padStart(2,"0");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function fmt(s){s=Math.floor(Math.abs(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?`${h}:${f2(m)}:${f2(s%60)}`:`${m}:${f2(s%60)}`}
+const fd=d=>d==60?"1min":d+"s";
+const spk=s=>{const t=fmt(s);return(t.endsWith(":00")?t.slice(0,-3):t).replace(/:/g," ")};
+const nm=p=>(riders.find(x=>x.id===p.r)||{n:p.n||"?"}).n;
+const exp=()=>Math.max(5,+$("ex").value||45);
+
+function save(){try{localStorage.setItem("ttt2",JSON.stringify({riders,start:$("rs").value,exp:$("ex").value,lang:lg(),TP,voice:$("vo").value,v:3,cal,starter:riders.findIndex(r=>r.id===starterId),off:$("of").value}))}catch(e){}}
+function load(){try{
+  const s=JSON.parse(localStorage.getItem("ttt2")||"null");if(!s)return;
+  if(Array.isArray(s.riders)&&s.riders.length>=4&&s.riders.length<=6)riders=s.riders.map(r=>({id:nid++,n:String(r.n),d:DUR.includes(r.d)?r.d:30,skip:false}));
+  if(s.start)$("rs").value=s.start;
+  if(s.exp)$("ex").value=s.exp;
+  if(s.lang)$("lg").value=s.lang;
+  if(s.v===3&&s.TP&&s.TP.nl&&s.TP.en)TP=s.TP;
+  if(s.cal&&typeof s.cal==="object")cal=s.cal;
+  if(Number.isInteger(s.starter)&&riders[s.starter])starterId=riders[s.starter].id;
+  if(s.off!==undefined)$("of").value=s.off;
+  want=s.voice||"";
+}catch(e){}}
+
+/* clock */
+function st(){
+  if(mode==="now")return nowT;
+  const [h,m]=($("rs").value||"19:30").split(":").map(Number);
+  const d=new Date();d.setHours(h,m,0,0);return d.getTime();
+}
+function clk(){
+  if(mode==="test")return tBase+(Date.now()-tT)/1000*spd+adj/1000;
+  return (Date.now()-st()+adj)/1000;
+}
+
+/* schedule */
+function extend(lim){
+  const n=riders.length;
+  if(!riders.some(r=>!r.skip))return;
+  const l=pulls[pulls.length-1];
+  let k=l?riders.findIndex(r=>r.id===l.r):-1,s=l?l.e:0;
+  if(!l){const S=riders.find(r=>r.id===starterId);if(S){pulls.push({r:S.id,n:S.n,s:0,e:60,first:true});s=60;k=riders.indexOf(S)}}
+  while(s<lim){
+    let g=0;do{k=(k+1)%n;g++}while(riders[k].skip&&g<=n);
+    const R=riders[k];pulls.push({r:R.id,n:R.n,s,e:s+R.d});s+=R.d;
+  }
+}
+function recompute(){
+  const c=clk();
+  pulls=pulls.filter(p=>p.s<=c);
+  const p=pulls[pulls.length-1];
+  if(p&&!p.first&&c<p.e){const R=riders.find(x=>x.id===p.r);if(R&&p.s+R.d>c)p.e=p.s+R.d}
+  extend(Math.max(exp()*60,c+120));
+}
+
+/* voice */
+const vkey=()=>$("vo").value||"default";
+const off=()=>+$("of").value||0;
+function estMs(t,kind){const k=cal[vkey()+"|"+kind];return k?Math.max(300,k.t+(t.length-k.l)*60):300+t.length*75}
+function showCal(){
+  const w=cal[vkey()+"|w"],g=cal[vkey()+"|g"],f=x=>x?(x.t/1000).toFixed(1)+"s":"–";
+  $("ci").textContent=(w||g)?`Learned timing: warning line ${f(w)}, switch line ${f(g)} (from the speak command until the line ends).`:"No timing learned yet. Press a Test voice button a few times.";
+}
+let sg=0;
+function say(s,cancel,kind){
+  if(!voiceOn||!window.speechSynthesis||!s)return;
+  if(cancel){speechSynthesis.cancel();sg++}
+  const idle=cancel||(!speechSynthesis.speaking&&!speechSynthesis.pending);
+  const my=sg;
+  const u=new SpeechSynthesisUtterance(s);
+  const v=speechSynthesis.getVoices().find(v=>v.name===$("vo").value);
+  if(v){u.voice=v;u.lang=v.lang}else u.lang=lg()==="nl"?"nl-BE":"en";
+  const key=vkey()+"|"+kind,t0=performance.now();
+  u.onend=()=>{
+    if(!idle||my!==sg||!kind)return;
+    const tot=performance.now()-t0,o=cal[key];
+    cal[key]=o?{t:o.t*.5+tot*.5,l:o.l*.5+s.length*.5}:{t:tot,l:s.length};
+    showCal();save();
+  };
+  speechSynthesis.speak(u);
+}
+function fill(t,i){
+  const p=pulls[i],q=pulls[i+1];if(!p)return"";
+  return t.replace(/\{cur\}/g,nm(p)).replace(/\{dur\}/g,p.e-p.s).replace(/\{end\}/g,spk(p.e))
+    .replace(/\{next\}/g,q?nm(q):"").replace(/\{ndur\}/g,q?q.e-q.s:"").replace(/\{nend\}/g,q?spk(q.e):"");
+}
+function fillVoices(){
+  const all=speechSynthesis.getVoices();if(!all.length)return;
+  const l=lg(),keep=$("vo").value||want;
+  const lc=v=>v.lang.replace("_","-");
+  let vs=all.filter(v=>lc(v).toLowerCase().startsWith(l));
+  const none=!vs.length;
+  if(none)vs=all.slice();
+  vs.sort((a,b)=>(lc(b)==="nl-BE")-(lc(a)==="nl-BE"));
+  $("vo").innerHTML=(none?'<option value="">Device default (no match)</option>':"")+vs.map(v=>`<option value="${esc(v.name)}">${esc(v.name)} (${v.lang})</option>`).join("");
+  $("vo").value=none?"":(vs.find(v=>v.name===keep)||vs[0]).name;
+  $("vh").textContent=none?"No voice for this language found, so the device default voice is used and it will sound wrong.":"";
+}
+function loadT(){$("tw").value=TP[lg()].warn;$("tg").value=TP[lg()].go}
+function tl(k){
+  const c=clk();
+  let i=pulls.findIndex(p=>c>=p.s&&c<p.e);
+  if(i<0)i=Math.max(0,pulls.findIndex(p=>p.s>c));
+  const was=voiceOn;voiceOn=true;say(fill(TP[lg()][k],i),true,k==="warn"?"w":"g");voiceOn=was;
+}
+
+/* main loop */
+function tick(){
+  const c=clk();
+  extend(Math.max(exp()*60,c+120));
+  const i=pulls.findIndex(p=>c>=p.s&&c<p.e);
+  if(i>=0){
+    const p=pulls[i],w=fill(TP[lg()].warn,i);
+    if(lastWarn!==p.s&&c>=p.e-5-estMs(w,"w")/1000+off()&&p.e-c>2){lastWarn=p.s;say(w,false,"w")}
+  }
+  const n=pulls.findIndex(p=>p.s>c);
+  if(n>=0){
+    const q=pulls[n],g=fill(TP[lg()].go,n);
+    if(lastGo!==q.s&&!q.first&&c>=q.s-estMs(g,"g")/1000+off()&&q.s-c>0.5){lastGo=q.s;say(g,false,"g")}
+  }
+  render(c,i);
+}
+function render(c,i){
+  const neg=c<0;
+  document.body.classList.toggle("run",!neg);
+  $("cl").textContent=neg?`Race Clock · starts ${$("rs").value}`:"Race Clock";
+  $("clk").textContent=neg?"0:00":fmt(c);
+  let a=i>=0?i:pulls.findIndex(p=>p.s>c);
+  if(a<0)a=pulls.length;
+  if(i>=0){
+    const p=pulls[i],n=pulls[i+1],left=Math.ceil(p.e-c);
+    $("nl").textContent="Now pulling";
+    $("nw").textContent=nm(p);
+    $("lf").textContent=left+"s";
+    $("lf").className=left<=5?"hot":"";
+    $("nb").style.width=Math.max(0,Math.min(100,100*(c-p.s)/(p.e-p.s)))+"%";
+    $("nx").textContent=n?`Next: ${nm(n)} · ${fd(n.e-n.s)}`:"";
+  }else if(pulls[0]){
+    $("nl").textContent="Up first";
+    $("nw").textContent=nm(pulls[0]);
+    $("lf").textContent="";$("lf").className="";
+    $("nb").style.width="0%";
+    $("nx").textContent=`Pull length ${fd(pulls[0].e-pulls[0].s)}`;
+  }
+  const sig=pulls.map(p=>p.r+":"+p.s+":"+p.e).join("|")+"#"+riders.map(r=>r.n).join("|");
+  const box=$("pl");
+  let fresh=false;
+  if(sig!==lastSig){
+    lastSig=sig;fresh=true;
+    box.innerHTML=pulls.map(p=>`<div class="pr"><div class="rw"><span>${esc(nm(p))}</span><span>${fd(p.e-p.s)} tot ${fmt(p.e)}</span></div><div class="pb"><i></i></div></div>`).join("");
+  }
+  const rr=box.children;
+  for(let j=0;j<rr.length;j++){
+    const cls=j<a?"pr past":(j===a&&i>=0?"pr cur":"pr");
+    if(rr[j].className!==cls)rr[j].className=cls;
+  }
+  if(i>=0&&rr[a]){const p=pulls[i];rr[a].querySelector("i").style.width=Math.max(0,Math.min(100,100*(c-p.s)/(p.e-p.s)))+"%"}
+  if(fresh||a!==lastA){
+    lastA=a;
+    const t=rr[Math.max(0,a-2)];
+    if(t)box.scrollTo({top:t.offsetTop,behavior:fresh?"auto":"smooth"});
+  }
+}
+
+/* durations box */
+function rows(){
+  $("du").innerHTML="";
+  const mv=(k,dx)=>{const j=k+dx;if(j<0||j>=riders.length)return;[riders[k],riders[j]]=[riders[j],riders[k]];rows();recompute();save()};
+  riders.forEach((r,k)=>{
+    const d=document.createElement("div");d.className="dr"+(r.skip?" sk":"");
+    d.innerHTML=`<div class="mv"><button aria-label="Move up">▲</button><button aria-label="Move down">▼</button></div><input type="text" value="${esc(r.n)}" aria-label="Rider ${k+1} name"><div class="sg">`+DUR.map(v=>`<label><input type="radio" name="d${k}" value="${v}"${r.d===v?" checked":""}><span>${fd(v)}</span></label>`).join("")+`</div><button class="sm stb${r.id===starterId?" on":""}">Starter</button><button class="sm skb${r.skip?" on":""}">${r.skip?"Skipping":"Skip"}</button>`;
+    const [m,ni,,sb,sk]=d.children;
+    sb.onclick=()=>{starterId=starterId===r.id?null:r.id;rows();recompute();save()};
+    m.children[0].onclick=()=>mv(k,-1);
+    m.children[1].onclick=()=>mv(k,1);
+    ni.oninput=e=>{r.n=e.target.value||"Rider "+(k+1);save()};
+    sk.onclick=()=>{r.skip=!r.skip;rows();recompute()};
+    d.querySelectorAll("input[type=radio]").forEach(x=>x.onchange=()=>{r.d=+x.value;recompute();save()});
+    $("du").appendChild(d);
+  });
+}
+
+/* controls */
+function setAdj(v){adj=v;const s=adj/1000;$("adjv").textContent=s?`(${s>0?"+":"−"}${Math.abs(s)}s)`:"";}
+$("m1").onclick=()=>setAdj(adj-1000);
+$("p1").onclick=()=>setAdj(adj+1000);
+$("a0").onclick=()=>setAdj(0);
+function setMode(){
+  $("tb").hidden=mode!=="test";
+  $("md").textContent=mode==="now"?"Clock was started manually (Start now). Press “Use start time” to follow the start time again.":mode==="test"?"A test race is running. Press “Stop test” to return to the real clock.":"Race clock = local time minus the race start time.";
+}
+$("sn").onclick=()=>{mode="now";nowT=Date.now();setAdj(0);lastGo=lastWarn=-1;recompute();setMode()};
+$("us").onclick=()=>{mode="time";lastGo=lastWarn=-1;recompute();setMode()};
+$("rs").onchange=()=>{mode="time";recompute();setMode();save()};
+$("ex").oninput=()=>{recompute();save()};
+$("nr").onchange=()=>{
+  const n=+$("nr").value;
+  while(riders.length<n)riders.push({id:nid++,n:"Rider "+(riders.length+1),d:30,skip:false});
+  riders.length=n;rows();recompute();save();
+};
+$("ts").onclick=()=>{mode="test";tBase=0;tT=Date.now();setAdj(0);lastGo=lastWarn=-1;recompute();setMode()};
+$("te").onclick=()=>{if(mode!=="test")return;mode="time";setAdj(0);lastGo=lastWarn=-1;recompute();setMode()};
+$("tk").onclick=()=>{
+  if(mode!=="test")return;
+  const c=clk();let i=pulls.findIndex(p=>c>=p.s&&c<p.e);if(i<0)return;
+  if(pulls[i].e-c<=8)i++;
+  if(!pulls[i])return;
+  tBase=pulls[i].e-8-adj/1000;tT=Date.now();
+};
+$("mu").onclick=()=>{
+  voiceOn=!voiceOn;$("mu").textContent=voiceOn?"🔊 Voice on":"🔇 Voice off";
+  if(!voiceOn&&window.speechSynthesis)speechSynthesis.cancel();
+};
+$("lg").onchange=()=>{loadT();if(window.speechSynthesis)fillVoices();save()};
+$("vo").onchange=()=>{showCal();save()};
+$("of").oninput=save;
+$("cr").onclick=()=>{cal={};showCal();save()};
+$("tw").oninput=()=>{TP[lg()].warn=$("tw").value;save()};
+$("tg").oninput=()=>{TP[lg()].go=$("tg").value;save()};
+$("td").onclick=()=>{TP[lg()]=Object.assign({},TP0[lg()]);loadT();save()};
+$("tw1").onclick=()=>tl("warn");
+$("tg1").onclick=()=>tl("go");
+
+function unlock(){
+  $("arm").hidden=true;
+  try{navigator.wakeLock&&navigator.wakeLock.request("screen").catch(()=>{})}catch(e){}
+}
+["pointerdown","keydown"].forEach(e=>addEventListener(e,unlock,{once:true}));
+
+/* init */
+load();
+$("nr").value=riders.length;
+rows();loadT();setMode();showCal();
+if(window.speechSynthesis){fillVoices();speechSynthesis.onvoiceschanged=()=>{fillVoices();showCal()}}
+recompute();
+setInterval(tick,200);tick();
+</script>
+</body>
+</html>
